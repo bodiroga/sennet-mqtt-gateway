@@ -10,7 +10,7 @@ from ConfigParser import ConfigParser
 
 service_name = "sennet-mqtt"
 current_path = "/".join(os.path.realpath(__file__).split("/")[:-1])
-logfile = "/var/log/%s.log" % (current_path, service_name)
+logfile = "/var/log/%s.log" % (service_name)
 configuration_file = "%s/configuration.ini" %current_path
 global_variables = {}
 
