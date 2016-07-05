@@ -86,7 +86,7 @@ def get_values():
                     channel_magnitude = channel_name.split(" ")[0]
                     channel_unit = channel_name[channel_name.find("(")+1:channel_name.find(")")]
                     channel_value = standarize_unit(channel_unit,each_channel.text)
-                    topic_name = "%s/%s/%s" %(global_variables[service_name+'_publish_topic_prefix'],device_name,channel_magnitude)
+                    topic_name = "%s/%s/%s/%s" %(global_variables[service_name+'_publish_topic_prefix'],name,device_name,channel_magnitude)
                     try:
                         print "Publishing topic '%s' with value '%s'" %(topic_name,channel_value)
                         mqtt_publish.single(topic_name, channel_value, hostname=global_variables['global_mqtt_broker_host'])
