@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+### BEGIN INIT INFO
+# Provides: sennet-mqtt
+# Required-Start: $syslog
+# Required-Stop: $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Description: Startup/Shutdown sennet-mqtt-gateway
+### END INIT INFO
+
+case "$1" in
+    start)
+        # Start Sennet-MQTT gateway
+        echo -n "Starting Sennet-MQTT gateway "
+        /usr/bin/python /root/sennet-mqtt-gateway.py &
+        echo "OK"
+        ;;
+    status)
+        # Check Sennet-MQTT gateway status
+        echo "Checking Sennet-MQTT gateway status..."
+        PID=$(ps aux | grep 'sennet-mqtt-gateway.py' | grep python | awk '{print $2}')
+        if ps aux | grep 'sennet-mqtt-gateway.py' | grep python > /dev/null 2> /dev/null; then
+           echo "Service is running"
+        else
+           echo "Service is not running"
+        fi
+        ;;
+    stop)
+        # Stop Sennet-MQTT gateway
+        echo -n "Shutdown Sennet-MQTT gateway... "
+        kill -9 $(ps aux | grep 'sennet-mqtt-gateway.py' | awk '{print $2}') 2> /dev/null
+        echo "OK"
+        ;;
+    reload|restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 start|stop|restart|status|reload"
+        exit 1
+esac
+exit 0
